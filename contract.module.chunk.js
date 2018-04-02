@@ -127,14 +127,12 @@ var ContractComponent = (function () {
     ContractComponent.prototype.ngAfterViewInit = function () {
     };
     ContractComponent.prototype.pauseUnPause = function () {
-        var _this = this;
         this.pauseState = !this.pauseState;
-        this._smartContractService.pauseUnPauseSmartContract(this.userObject.token, this.pauseState).takeWhile(function () { return _this._alive; }).subscribe(function (response) {
-            console.log(response);
-        });
+        /*this._smartContractService.pauseUnPauseSmartContract(this.userObject.token, this.pauseState).takeWhile(() => this._alive).subscribe(response => {
+          console.log(response);
+        });*/
     };
     ContractComponent.prototype.privateSale = function () {
-        var _this = this;
         if (this.privateSaleFunction == false) {
             __WEBPACK_IMPORTED_MODULE_3_jquery__(".error").hide();
             this.privateSaleFunction = true;
@@ -156,20 +154,6 @@ var ContractComponent = (function () {
             if (this.usdAmount !== undefined && this.usdAmount > 0 && this.usdAmount != null
                 && this.ethAddress !== undefined && this.ethAddress != "" && this.ethAddress != null
                 && this.ethAddress.trim() != "") {
-                this._smartContractService.privateSale(this.userObject.token, this.ethAddress, this.usdAmount, 0).takeWhile(function () { return _this._alive; }).subscribe(function (response) {
-                    console.log(response);
-                    if (response.code == 200) {
-                        _this.ethAddress = "";
-                        _this.usdAmount = "";
-                        __WEBPACK_IMPORTED_MODULE_3_jquery__("#snackbar").html("Successfully Transfered");
-                        _this.toast.showToast();
-                    }
-                    else {
-                        __WEBPACK_IMPORTED_MODULE_3_jquery__("#snackbar").html(response.message);
-                        _this.toast.showToast();
-                    }
-                    _this.privateSaleFunction = false;
-                });
             }
         }
     };
@@ -180,52 +164,50 @@ var ContractComponent = (function () {
         __WEBPACK_IMPORTED_MODULE_3_jquery__('#success-div').hide();
     };
     ContractComponent.prototype.estimate = function () {
-        var _this = this;
         __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').show();
-        this._smartContractService.getEstimatedPrice().subscribe(function (response) {
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').hide();
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('#main-div').show();
-            console.log(response);
-            _this.no_of_transactions = response.totalContributionsForTransaction;
-            _this.estimated_gas_price = response.estimatedTotalGasPrice;
-            _this.remaining_eth_balance = parseFloat(response.ethBalanceRemaining);
-        }, function (err) {
-            if (err) {
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').hide();
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('#error-div').show();
-                var obj = JSON.parse(err._body);
-                __WEBPACK_IMPORTED_MODULE_3_jquery__("#error-text").text(obj.message);
-            }
-        });
+        // this._smartContractService.getEstimatedPrice().subscribe(response => {
+        //   $('.preloader3').hide();
+        //   $('#main-div').show();
+        //   console.log(response);
+        //   this.no_of_transactions = response.totalContributionsForTransaction;
+        //   this.estimated_gas_price = response.estimatedTotalGasPrice;
+        //   this.remaining_eth_balance = parseFloat(response.ethBalanceRemaining);
+        // }, err => {
+        //   if (err) {
+        //     $('.preloader3').hide();
+        //     $('#error-div').show();
+        //     var obj = JSON.parse(err._body);
+        //     $("#error-text").text(obj.message);
+        //   }
+        // });
     };
     ContractComponent.prototype.initiate = function () {
-        var _this = this;
         __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').show();
         __WEBPACK_IMPORTED_MODULE_3_jquery__('#btns-div').hide();
         __WEBPACK_IMPORTED_MODULE_3_jquery__('#success-div').hide();
-        this._smartContractService.initiateTransaction().subscribe(function (response) {
-            console.log(response);
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('#success-text').text(response.message);
-            _this.transaction_link = response.transactionsUrl;
-            _this._smartContractService.getEstimatedPrice().subscribe(function (response) {
-                _this.no_of_transactions = response.totalContributionsForTransaction;
-            }, function (err) {
-                if (err) {
-                    _this.no_of_transactions = 0;
-                }
-            });
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('#success-div').show();
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').hide();
-            __WEBPACK_IMPORTED_MODULE_3_jquery__('#btns-div').show();
-        }, function (err) {
-            if (err) {
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('#btns-div').show();
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('.preloader3').hide();
-                __WEBPACK_IMPORTED_MODULE_3_jquery__('#error-div').show();
-                var obj = JSON.parse(err._body);
-                __WEBPACK_IMPORTED_MODULE_3_jquery__("#error-text").text(obj.message);
-            }
-        });
+        // this._smartContractService.initiateTransaction().subscribe(response => {
+        //   console.log(response);
+        //   $('#success-text').text(response.message);
+        //   this.transaction_link = response.transactionsUrl;
+        //   this._smartContractService.getEstimatedPrice().subscribe(response => {
+        //     this.no_of_transactions = response.totalContributionsForTransaction;
+        //   }, err => {
+        //     if (err) {
+        //       this.no_of_transactions = 0;
+        //     }
+        //   });
+        //   $('#success-div').show();
+        //   $('.preloader3').hide();
+        //   $('#btns-div').show();
+        // }, err => {
+        //   if (err) {
+        //     $('#btns-div').show();
+        //     $('.preloader3').hide();
+        //     $('#error-div').show();
+        //     var obj = JSON.parse(err._body);
+        //     $("#error-text").text(obj.message);
+        //   }
+        // });
     };
     ContractComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
